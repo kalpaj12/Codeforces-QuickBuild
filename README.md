@@ -19,7 +19,7 @@ Currently supports C and C++
 
 
 # Procedure
-1) Clone this repo and save all the files to a proper location.
+1) Clone this repo.
 
 
 2) Open this folder as work-space in VS Code. (`code .` in terminal)
