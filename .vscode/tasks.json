@@ -1,0 +1,40 @@
+{
+    "version": "2.1.0",
+    "showOutput": "never",
+    "tasks": [
+        {
+            "label": "C++ Builder",
+            "type": "shell",
+            "linux": {
+                "command": "sh",
+                "args": [
+                    ".vscode/Builder.sh",
+                    "${fileDirname}",
+                    "${file}",
+                    "${workspaceFolder}",
+                    "&>Output.txt"
+                ]
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Create Files",
+            "type": "shell",
+            "linux": {
+                "command": "sh",
+                "args": [
+                    ".vscode/files.sh"
+                ]
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        }
+    ]
+}
