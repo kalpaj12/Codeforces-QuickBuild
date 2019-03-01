@@ -28,7 +28,7 @@ Currently supports C and C++
 3) Make necessary changes to main.cc. This acts as your default main file for all problems of a particular contest.
 
 
-4) use ``` ctrl+shift+` ``` to open a new terminal from vs code. Here type in `./parse.py 4` to download all the test-cases (input and output) of that particular contest.
+4) use ``` ctrl+shift+` ``` to open a new terminal when in vs code. Here type in `./parse.py (contest_name)` (eg.`./parse.py 4`) to download all the test-cases (input and output) of that particular contest.
 
 
 5) Navigate to A.cc using the keybindings `ctrl+p` and type in A.cc
