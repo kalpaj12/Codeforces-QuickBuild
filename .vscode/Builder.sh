@@ -61,5 +61,7 @@ then
     rm a.out
     rm $1/temp_myoutput
     rm $1/temp_output
+    rm $1/temp2_output
+    rm $1/temp2_myoutput
 fi
 exit
