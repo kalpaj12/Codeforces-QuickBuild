@@ -1,4 +1,4 @@
-g++ $2 -lm -pthread
+g++ $2 -lm
 if [ -f "./a.out" ]
 then
     counter=1
@@ -13,18 +13,50 @@ then
         error=$?
         if [ $error -eq 0 ]
         then
-            echo "Testcase #$counter: AC"
-            rm $1/myoutput$counter
+            cp $1/myoutput$counter $1/temp2_myoutput
+            cp $1/output$counter $1/temp2_output
+            sed -i -e ':a;$!{N;s/\n/ /;ba;}' $1/temp2_myoutput
+            sed -i -e ':a;$!{N;s/\n/ /;ba;}' $1/temp2_output
+            diff $1/temp2_myoutput $1/temp2_output > /dev/null
+            e2=$?
+            if [ $e2 -eq 0 ]
+            then
+                echo "Testcase #$counter: AC\n"
+                rm $1/myoutput$counter
+            else
+                echo "Testcase #$counter: ==WA=="
+                echo "Expected:"
+                cat "$1/output$counter"
+                
+                if [ -z "$(tail -c 1 "$1/output$counter")" ]
+                then
+                    echo "\n==EOF==\n"
+                else
+                    echo "\n==EOF==\n"
+                fi
+                
+                echo "Output:"
+                cat "$1/myoutput$counter"
+                echo "\n==EOF==\n"
+            fi
         elif [ $error -eq 1 ]
         then
             echo "Testcase #$counter: ==WA=="
             echo "Expected:"
             cat "$1/output$counter"
+            
+            if [ -z "$(tail -c 1 "$1/output$counter")" ]
+            then
+                echo "==EOF==\n"
+            else
+                echo "\n==EOF==\n"
+            fi
             echo "Output:"
             cat "$1/myoutput$counter"
+            echo "\n==EOF==\n"
+            
         fi
         counter=$((counter+1))
-        echo '\n'
     done
     rm a.out
     rm $1/temp_myoutput
