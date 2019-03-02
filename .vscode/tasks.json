@@ -3,15 +3,32 @@
     "showOutput": "never",
     "tasks": [
         {
+            "label": "Codeforces builder",
+            "type": "shell",
+            "linux": {
+                "command": "sh",
+                "args": [
+                    ".vscode/codeforcesbuilder.sh",
+                    "${fileDirname}",
+                    "${file}",
+                    "${workspaceFolder}",
+                    "&>Output.txt"
+                ]
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
             "label": "C++ Builder",
             "type": "shell",
             "linux": {
                 "command": "sh",
                 "args": [
                     ".vscode/Builder.sh",
-                    "${fileDirname}",
-                    "${file}",
-                    "${workspaceFolder}",
+                    "${relativeFile}",
                     "&>Output.txt"
                 ]
             },
