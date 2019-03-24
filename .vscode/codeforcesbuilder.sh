@@ -1,10 +1,34 @@
-g++ $2 -lm
+g++ $2 -lm -pthread -g
 if [ -f "./a.out" ]
 then
     counter=1
     for file in $1/input*
     do
-        ./a.out < $1/input$counter > $1/myoutput$counter
+        timeout -k 0.3s 0.3s ./a.out < $1/input$counter > $1/TTTmyoutput$counter
+        
+        if [ $? -ne 0 ]
+        then
+            if [ -f "$1/myoutput$counter" ]
+            then
+                rm $1/myoutput$counter
+            fi
+            
+            if [ -f "$1/TTTmyoutput$counter" ]
+            then
+                rm $1/TTTmyoutput$counter
+            fi
+            
+            echo "TLE / RE" > $1/myoutput$counter
+        else
+            if [ -f "$1/myoutput$counter" ]
+            then
+                rm $1/myoutput$counter
+            fi
+            
+            cat $1/TTTmyoutput$counter >> $1/myoutput$counter
+            rm $1/TTTmyoutput$counter
+        fi
+        
         cp $1/myoutput$counter $1/temp_myoutput
         cp $1/output$counter $1/temp_output
         sed -i -e 's/[\t \n]//g;/^$/d' $1/temp_output
@@ -58,10 +82,30 @@ then
         fi
         counter=$((counter+1))
     done
-    rm a.out
-    rm $1/temp_myoutput
-    rm $1/temp_output
-    rm $1/temp2_output
-    rm $1/temp2_myoutput
+    
+    if [ -f "$1/temp_myoutput" ]
+    then
+        rm $1/temp_myoutput
+    fi
+    
+    if [ -f "$1/temp_output" ]
+    then
+        rm $1/temp_output
+    fi
+    
+    if [ -f "$1/temp2_output" ]
+    then
+        rm $1/temp2_output
+    fi
+    
+    if [ -f "$1/temp2_myoutput" ]
+    then
+        rm $1/temp2_myoutput
+    fi
+    
+    if [ -f "a.out" ]
+    then
+        rm a.out
+    fi
 fi
 exit
